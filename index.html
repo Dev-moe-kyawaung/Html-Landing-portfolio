@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Moe Kyaw Aung - Senior Android Developer with 12 years experience. Building secure, scalable mobile apps with Kotlin, Jetpack Compose, Firebase.">
+    <meta name="keywords" content="Android Developer, Kotlin, Jetpack Compose, Firebase, Moe Kyaw Aung">
+    <title>MOE KYAW AUNG • PORTFOLIO 1.3 // CYBER TERMINAL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=VT323&amp;family=Space+Grotesk:wght@400;500;600&amp;display=swap');
+        
+        :root {
+            --neon-green: #00ff9d;
+            --neon-purple: #c084fc;
+            --terminal-bg: #0a0a0f;
+        }
+        
+        body {
+            font-family: 'Space Grotesk', system_ui, sans-serif;
+        }
+        
+        .terminal-font {
+            font-family: 'VT323', monospace;
+            font-size: 1.1rem;
+            line-height: 1.1;
+        }
+        
+        .cyberpunk-bg {
+            background: #0a0a0f;
+            background-image: 
+                linear-gradient(#00ff9d10 1px, transparent 1px),
+                linear-gradient(90deg, #00ff9d10 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        
+        .neon-text {
+            color: #00ff9d;
+            text-shadow: 0 0 10px #00ff9d,
+                        0 0 20px #00ff9d;
+        }
+        
+        .neon-purple {
+            color: #c084fc;
+            text-shadow: 0 0 10px #c084fc;
+        }
+        
+        .section {
+            scroll-margin-top: 80px;
+        }
+        
+        .nav-active {
+            color: #00ff9d;
+            text-shadow: 0 0 10px #00ff9d;
+        }
+        
+        .terminal-window {
+            background: #111114;
+            border: 1px solid #00ff9d30;
+            box-shadow: 0 0 15px #00ff9d20;
+        }
+        
+        .masonry-grid {
+            column-count: 1;
+        }
+        
+        @media (min-width: 768px) {
+            .masonry-grid {
+                column-count: 2;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .masonry-grid {
+                column-count: 3;
+            }
+        }
+        
+        .project-card {
+            break-inside: avoid;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 25px #00ff9d30;
+        }
+        
+        .progress-ring {
+            transition: stroke-dashoffset 1.5s ease;
+        }
+        
+        .stat-number {
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .cyber-btn {
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cyber-btn:hover {
+            box-shadow: 0 0 15px #00ff9d;
+            transform: translateY(-1px);
+        }
+        
+        .nav-link {
+            transition: all 0.2s ease;
+        }
+        
+        .nav-link:hover {
+            color: #00ff9d;
+        }
+        
+        .page-content {
+            display: none;
+        }
+        
+        .page-content.active {
+            display: block;
+        }
+        
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.07;
+        }
+        
+        .hacker-text {
+            font-family: 'VT323', monospace;
+            letter-spacing: 1px;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 8px;
+            width: 10px;
+            height: 10px;
+            background: #00ff9d;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff9d;
+        }
+        
+        .animated-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #00ff9d;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: width 0.2s, height 0.2s;
+        }
+    </style>
+</head>
+<body class="bg-[#0a0a0f] text-gray-200 cyberpunk-bg overflow-x-hidden">
+    <!-- Animated Cursor -->
+    <div id="cursor" class="animated-cursor hidden md:block"></div>
+    
+    <!-- Fixed Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-[#0a0a0f]/95 border-b border-[#00ff9d20] z-50 backdrop-blur-lg">
+        <div class="max-w-screen-2xl mx-auto">
+            <div class="px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-x-3">
+                    <div class="w-9 h-9 bg-[#00ff9d] flex items-center justify-center rounded-sm">
+                        <span class="text-[#0a0a0f] font-bold text-2xl terminal-font">M</span>
+                    </div>
+                    <div>
+                        <span class="font-bold text-xl tracking-tighter">MOE KYAW AUNG</span>
+                        <span class="text-xs text-[#00ff9d] block -mt-1 terminal-font">v1.3</span>
+                    </div>
+                </div>
+                
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex items-center gap-x-8 text-sm">
+                    <a href="#" onclick="showPage('home')" class="nav-link text-sm font-medium px-3">HOME</a>
+                    <a href="#" onclick="showPage('about')" class="nav-link text-sm font-medium px-3">ABOUT</a>
+                    <a href="#" onclick="showPage('projects')" class="nav-link text-sm font-medium px-3">PROJECTS</a>
+                    <a href="#" onclick="showPage('experience')" class="nav-link text-sm font-medium px-3">EXPERIENCE</a>
+                    <a href="#" onclick="showPage('skills')" class="nav-link text-sm font-medium px-3">SKILLS</a>
+                    <a href="#" onclick="showPage('contact')" class="nav-link text-sm font-medium px-3">CONTACT</a>
+                </div>
+                
+                <div class="flex items-center gap-x-3">
+                    <!-- Language Toggle -->
+                    <button onclick="toggleLanguage()" 
+                            class="px-3 py-1.5 text-xs border border-[#00ff9d30] hover:bg-[#00ff9d10] rounded flex items-center gap-x-1.5 text-xs">
+                        <i class="fas fa-globe"></i>
+                        <span id="lang-text">EN</span>
+                    </button>
+                    
+                    <!-- Theme Toggle -->
+                    <button onclick="toggleTheme()" 
+                            class="w-9 h-9 flex items-center justify-center border border-[#00ff9d30] hover:bg-[#00ff9d10] rounded">
+                        <i class="fas fa-adjust"></i>
+                    </button>
+                    
+                    <button onclick="showPage('contact')" 
+                            class="px-5 py-2 text-sm bg-[#00ff9d] hover:bg-[#00ff9d] text-[#0a0a0f] font-semibold rounded flex items-center gap-x-2 cyber-btn">
+                        <span class="font-bold text-xs">HIRE ME</span>
+                    </button>
+                    
+                    <!-- Mobile Menu -->
+                    <button class="md:hidden w-9 h-9 flex items-center justify-center border border-[#00ff9d30] rounded" onclick="toggleMobileNav()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- HOME PAGE -->
+    <div id="page-home" class="page-content active pt-20">
+        <!-- Hero Section -->
+        <div class="min-h-[100vh] flex items-center relative">
+            <!-- Particle Background -->
+            <canvas id="particle-canvas" class="absolute inset-0 w-full h-full"></canvas>
+            
+            <div class="max-w-screen-2xl mx-auto px-6 relative z-10 pt-12">
+                <div class="max-w-4xl">
+                    <div class="inline-flex items-center gap-x-2 px-4 py-1.5 border border-[#00ff9d30] rounded-full mb-6">
+                        <div class="w-2 h-2 bg-[#00ff9d] rounded-full animate-pulse"></div>
+                        <span class="text-[#00ff9d] text-sm tracking-[2px] terminal-font">ONLINE • AVAILABLE FOR FREELANCE</span>
+                    </div>
+                    
+                    <h1 class="text-7xl md:text-8xl font-bold tracking-tighter leading-none">
+                        <span class="neon-text">MOE KYAW AUNG</span><br>
+                        <span class="text-6xl md:text-7xl text-white">ANDROID</span><br>
+                        <span class="text-[#c084fc]">SENIOR DEVELOPER</span>
+                    </h1>
+                    
+                    <p class="max-w-md mt-6 text-xl text-gray-400">12 years building secure, scalable &amp; beautiful Android applications.</p>
+                    
+                    <div class="flex flex-wrap gap-4 mt-10">
+                        <button onclick="showPage('projects')" 
+                                class="px-8 py-4 bg-[#00ff9d] text-[#0a0a0f] font-bold rounded-lg flex items-center gap-x-3 hover:scale-105 transition-all cyber-btn">
+                            <span>VIEW PROJECTS</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        
+                        <button onclick="showPage('about')" 
+                                class="px-8 py-4 border border-[#00ff9d30] hover:bg-[#00ff9d10] font-medium rounded-lg flex items-center gap-x-3 transition-all">
+                            <span>EXPLORE PROFILE</span>
+                        </button>
+                    </div>
+                    
+                    <div class="mt-16 flex items-center gap-x-8 text-sm">
+                        <div class="flex -space-x-2">
+                            <div class="w-7 h-7 bg-gray-700 border border-[#00ff9d30] rounded-full"></div>
+                            <div class="w-7 h-7 bg-gray-700 border border-[#00ff9d30] rounded-full"></div>
+                            <div class="w-7 h-7 bg-gray-700 border border-[#00ff9d30] rounded-full"></div>
+                        </div>
+                        <div class="text-xs text-gray-500">TRUSTED BY 40+ COMPANIES</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="absolute bottom-10 left-1/2 hidden md:block">
+                <div class="flex flex-col items-center gap-y-1 text-xs">
+                    <span class="text-[#00ff9d]">SCROLL TO BEGIN</span>
+                    <i class="fas fa-chevron-down animate-bounce text-[#00ff9d]"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ABOUT PAGE -->
+    <div id="page-about" class="page-content pt-20">
+        <div class="max-w-screen-2xl mx-auto px-6 py-16">
+            <div class="flex items-end justify-between mb-12">
+                <div>
+                    <span class="text-[#00ff9d] text-sm tracking-[3px]">CHAPTER 01</span>
+                    <h2 class="text-6xl font-bold tracking-tighter">THE OPERATIVE</h2>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-12 gap-8">
+                <!-- Profile -->
+                <div class="md:col-span-5">
+                    <div class="terminal-window p-8 rounded-3xl border border-[#00ff9d20]">
+                        <div class="flex items-center gap-x-4">
+                            <img src="https://gravatar.com/avatar/moekyawaung13721?s=200" alt="Moe Kyaw Aung" class="w-24 h-24 rounded-full border-2 border-[#00ff9d]">
+                            <div>
+                                <div class="font-bold text-3xl">Moe Kyaw Aung</div>
+                                <div class="text-[#00ff9d]">Senior Android Engineer</div>
+                                <div class="text-xs mt-1 text-gray-400">Yangon, Myanmar</div>
+                            </div>
+                        </div>
+                        
+                        <div class="my-8 h-px bg-[#00ff9d20]"></div>
+                        
+                        <div class="text-sm text-gray-400">
+                            12 years crafting production-grade Android applications. 
+                            Specializing in clean architecture, Kotlin, and secure mobile systems.
+                        </div>
+                        
+                        <!-- Stats -->
+                        <div class="grid grid-cols-2 gap-4 mt-8">
+                            <div class="terminal-window p-4 rounded-2xl">
+                                <div class="text-xs text-gray-400">EXPERIENCE</div>
+                                <div id="years-counter" class="text-5xl font-bold text-[#00ff9d] stat-number">12</div>
+                                <div class="text-xs">YEARS</div>
+                            </div>
+                            <div class="terminal-window p-4 rounded-2xl">
+                                <div class="text-xs text-gray-400">REPOSITORIES</div>
+                                <div id="repos-counter" class="text-5xl font-bold text-[#00ff9d] stat-number">122</div>
+                                <div class="text-xs">PUBLIC</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Animated Counters -->
+                <div class="md:col-span-7">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="terminal-window p-6 rounded-3xl text-center">
+                            <div class="mx-auto w-20 h-20 mb-4">
+                                <svg class="w-20 h-20" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="42" fill="none" stroke="#1f2937" stroke-width="8"/>
+                                    <circle cx="50" cy="50" r="42" fill="none" stroke="#00ff9d" stroke-width="8" 
+                                            stroke-dasharray="264" stroke-dashoffset="0" class="progress-ring"/>
+                                </svg>
+                            </div>
+                            <div id="apps-counter" class="text-4xl font-bold text-[#00ff9d]">3K+</div>
+                            <div class="text-xs mt-1 text-gray-400">APPS LAUNCHED</div>
+                        </div>
+                        
+                        <div class="terminal-window p-6 rounded-3xl text-center">
+                            <div class="mx-auto w-20 h-20 mb-4">
+                                <svg class="w-20 h-20" viewBox="0 0 100 100">
+                                    <circle cx="50" cy="50" r="42" fill="none" stroke="#1f2937" stroke-width="8"/>
+                                    <circle cx="50" cy="50" r="42" fill="none" stroke="#c084fc" stroke-width="8" 
+                                            stroke-dasharray="264" stroke-dashoffset="0" class="progress-ring"/>
+                                </svg>
+                            </div>
+                            <div class="text-4xl font-bold text-[#c084fc]">100%</div>
+                            <div class="text-xs mt-1 text-gray-400">SATISFACTION</div>
+                        </div>
+                        
+                        <div class="terminal-window p-6 rounded-3xl text-center">
+                            <div id="years-counter2" class="text-4xl font-bold text-[#00ff9d]">10+</div>
+                            <div class="text-xs mt-4 text-gray-400">YEARS IN KOTLIN</div>
+                        </div>
+                        
+                        <div class="terminal-window p-6 rounded-3xl text-center">
+                            <div class="text-4xl font-bold text-[#00ff9d]">40+</div>
+                            <div class="text-xs mt-4 text-gray-400">CLIENTS SERVED</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Timeline -->
+            <div class="mt-16">
+                <h3 class="font-bold mb-8 text-xl">MISSION TIMELINE</h3>
+                <div class="space-y-8 relative border-l border-[#00ff9d30] pl-8">
+                    <div class="timeline-item">
+                        <div class="font-bold">2024 — PRESENT</div>
+                        <div class="text-sm text-[#00ff9d]">Lead Android Engineer @ CyberForge Labs</div>
+                        <div class="text-xs text-gray-400 mt-1">Architecting secure fintech &amp; enterprise Android solutions</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="font-bold">2020 — 2024</div>
+                        <div class="text-sm text-[#00ff9d]">Senior Android Developer @ Nebula Systems</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="font-bold">2016 — 2020</div>
+                        <div class="text-sm text-[#00ff9d]">Android Developer @ PixelForge</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="font-bold">2012 — 2016</div>
+                        <div class="text-sm text-[#00ff9d]">Mobile Engineer @ Myanmar Digital Solutions</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- PROJECTS PAGE -->
+    <div id="page-projects" class="page-content pt-20">
+        <div class="max-w-screen-2xl mx-auto px-6 py-16">
+            <div class="mb-12">
+                <span class="text-[#00ff9d] text-sm tracking-[3px]">CHAPTER 02</span>
+                <h2 class="text-6xl font-bold tracking-tighter">PROJECT ARCHIVE</h2>
+            </div>
+            
+            <div class="masonry-grid gap-6">
+                <!-- Project Cards -->
+                <div class="project-card terminal-window p-6 rounded-3xl mb-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-xs px-3 py-1 bg-[#00ff9d20] text-[#00ff9d] rounded">FINTECH</span>
+                            <div class="font-bold mt-3 text-xl">AetherPay</div>
+                        </div>
+                        <i class="fas fa-external-link-alt text-[#00ff9d]"></i>
+                    </div>
+                    <div class="text-xs text-gray-400 mt-6">Secure mobile banking with biometric auth and real-time fraud detection.</div>
+                    <div class="text-xs mt-4 flex gap-x-2 text-[#00ff9d]">
+                        <span>Kotlin</span><span>Compose</span><span>Firebase</span>
+                    </div>
+                </div>
+                
+                <div class="project-card terminal-window p-6 rounded-3xl mb-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-xs px-3 py-1 bg-[#c084fc20] text-[#c084fc] rounded">ENTERPRISE</span>
+                            <div class="font-bold mt-3 text-xl">NexusCore</div>
+                        </div>
+                        <i class="fas fa-external-link-alt text-[#00ff9d]"></i>
+                    </div>
+                    <div class="text-xs text-gray-400 mt-6">Enterprise mobile platform built with clean architecture and Room DB.</div>
+                    <div class="text-xs mt-4 flex gap-x-2 text-[#00ff9d]">
+                        <span>Jetpack</span><span>Room</span><span>REST</span>
+                    </div>
+                </div>
+                
+                <div class="project-card terminal-window p-6 rounded-3xl mb-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-xs px-3 py-1 bg-[#00ff9d20] text-[#00ff9d] rounded">HEALTH</span>
+                            <div class="font-bold mt-3 text-xl">PulseGuard</div>
+                        </div>
+                        <i class="fas fa-external-link-alt text-[#00ff9d]"></i>
+                    </div>
+                    <div class="text-xs text-gray-400 mt-6">HIPAA-compliant health monitoring with Firebase sync.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- EXPERIENCE / SKILLS / CONTACT (abbreviated for length) -->
+    <div id="page-experience" class="page-content pt-20">
+        <div class="max-w-screen-2xl mx-auto px-6 py-16">
+            <h2 class="text-6xl font-bold tracking-tighter mb-12">EXPERIENCE LOG</h2>
+            <div class="terminal-window p-8 rounded-3xl max-w-4xl">12 years of continuous Android development experience across multiple industries.</div>
+        </div>
+    </div>
+    
+    <div id="page-skills" class="page-content pt-20">
+        <div class="max-w-screen-2xl mx-auto px-6 py-16">
+            <h2 class="text-6xl font-bold tracking-tighter mb-12">TECHNICAL SKILLS</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="terminal-window p-5 rounded-2xl">Kotlin</div>
+                <div class="terminal-window p-5 rounded-2xl">Jetpack Compose</div>
+                <div class="terminal-window p-5 rounded-2xl">ViewModel + Room</div>
+                <div class="terminal-window p-5 rounded-2xl">Firebase</div>
+                <div class="terminal-window p-5 rounded-2xl">REST APIs</div>
+                <div class="terminal-window p-5 rounded-2xl">Clean Architecture</div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="page-contact" class="page-content pt-20">
+        <div class="max-w-screen-2xl mx-auto px-6 py-16 max-w-xl">
+            <h2 class="text-6xl font-bold tracking-tighter mb-8">ESTABLISH CONNECTION</h2>
+            
+            <div class="terminal-window p-8 rounded-3xl">
+                <div class="space-y-4">
+                    <div class="flex items-center gap-x-4">
+                        <i class="fab fa-github w-6"></i> <span>github.com/moekyawaung</span>
+                    </div>
+                    <div class="flex items-center gap-x-4">
+                        <i class="fas fa-envelope w-6"></i> <span>moe@kyawaung.dev</span>
+                    </div>
+                    <div class="flex items-center gap-x-4">
+                        <i class="fab fa-telegram w-6"></i> <span>@moekyawaung</span>
+                    </div>
+                    <div class="flex items-center gap-x-4">
+                        <i class="fab fa-linkedin w-6"></i> <span>linkedin.com/in/moekyawaung</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="border-t border-[#00ff9d20] py-12 px-6">
+        <div class="max-w-screen-2xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between gap-y-4 text-xs">
+                <div>© MOE KYAW AUNG PORTFOLIO v1.3 // ALL RIGHTS RESERVED</div>
+                <div class="flex gap-x-6">
+                    <a href="https://github.com/moekyawaung" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://gravatar.com/moekyawaung13721" target="_blank"><i class="fas fa-user"></i></a>
+                    <a href="#"><i class="fas fa-envelope"></i></a>
+                    <a href="#"><i class="fas fa-phone"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-google-play"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Tailwind script
+        function initializeTailwind() {
+            document.documentElement.style.setProperty('--accent', '#00ff9d');
+        }
+        
+        // Page navigation
+        function showPage(page) {
+            document.querySelectorAll('.page-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.getElementById('page-' + page).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Animated counters
+        function animateCounters() {
+            const counters = [
+                { id: 'years-counter', target: 12 },
+                { id: 'repos-counter', target: 122 },
+                { id: 'apps-counter', target: 3000, suffix: '+' },
+                { id: 'years-counter2', target: 10, suffix: '+' }
+            ];
+            
+            counters.forEach(counter => {
+                const el = document.getElementById(counter.id);
+                if (!el) return;
+                
+                let current = 0;
+                const increment = counter.target / 60;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= counter.target) {
+                        current = counter.target;
+                        clearInterval(timer);
+                    }
+                    
+                    if (counter.id === 'apps-counter') {
+                        el.textContent = Math.floor(current) + '+';
+                    } else {
+                        el.textContent = Math.floor(current);
+                    }
+                }, 40);
+            });
+        }
+        
+        // Particle canvas
+        function initParticles() {
+            const canvas = document.getElementById('particle-canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            let particles = [];
+            
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speedX = Math.random() * 0.6 - 0.3;
+                    this.speedY = Math.random() * 0.6 - 0.3;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    
+                    if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                    if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+                }
+                draw() {
+                    ctx.fillStyle = '#00ff9d30';
+                    ctx.fillRect(this.x, this.y, this.size, this.size);
+                }
+            }
+            
+            for (let i = 0; i < 80; i++) {
+                particles.push(new Particle());
+            }
+            
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+            
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        }
+        
+        // Language toggle
+        let currentLang = 'en';
+        function toggleLanguage() {
+            const langText = document.getElementById('lang-text');
+            
+            if (currentLang === 'en') {
+                currentLang = 'my';
+                langText.textContent = 'MY';
+                // Burmese placeholder text would go here in a real implementation
+                alert('Burmese language mode activated (demo)');
+            } else {
+                currentLang = 'en';
+                langText.textContent = 'EN';
+            }
+        }
+        
+        // Theme toggle (cyberpunk stays dark)
+        function toggleTheme() {
+            document.body.classList.toggle('bg-white');
+            document.body.classList.toggle('text-gray-900');
+        }
+        
+        // Animated cursor
+        function initCursor() {
+            const cursor = document.getElementById('cursor');
+            if (!cursor || window.innerWidth < 768) return;
+            
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            
+            const interactive = document.querySelectorAll('button, a, .project-card');
+            interactive.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.style.width = '40px';
+                    cursor.style.height = '40px';
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursor.style.width = '20px';
+                    cursor.style.height = '20px';
+                });
+            });
+        }
+        
+        function toggleMobileNav() {
+            const nav = document.createElement('div');
+            nav.className = `fixed inset-0 bg-[#0a0a0f] z-[100] p-6 flex flex-col md:hidden`;
+            nav.innerHTML = `
+                <div class="flex justify-end mb-8"><button onclick="this.parentNode.remove()" class="text-3xl">×</button></div>
+                <div class="flex flex-col gap-y-6 text-xl">
+                    <a href="#" onclick="showPage('home');this.parentNode.parentNode.remove()" class="py-2">HOME</a>
+                    <a href="#" onclick="showPage('about');this.parentNode.parentNode.remove()" class="py-2">ABOUT</a>
+                    <a href="#" onclick="showPage('projects');this.parentNode.parentNode.remove()" class="py-2">PROJECTS</a>
+                    <a href="#" onclick="showPage('experience');this.parentNode.parentNode.remove()" class="py-2">EXPERIENCE</a>
+                    <a href="#" onclick="showPage('skills');this.parentNode.parentNode.remove()" class="py-2">SKILLS</a>
+                    <a href="#" onclick="showPage('contact');this.parentNode.parentNode.remove()" class="py-2">CONTACT</a>
+                </div>
+            `;
+            document.body.appendChild(nav);
+        }
+        
+        // Initialize everything
+        function initialize() {
+            initializeTailwind();
+            initParticles();
+            animateCounters();
+            initCursor();
+            
+            // Show home page by default
+            document.getElementById('page-home').classList.add('active');
+            
+            // Random cyberpunk console log
+            console.log('%c[MOE KYAW AUNG PORTFOLIO] Cyber terminal initialized. All systems operational.', 'color:#00ff9d');
+        }
+        
+        window.onload = initialize;
+    </script>
+</body>
+</html>
